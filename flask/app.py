@@ -24,7 +24,6 @@ def get_tasks():
             "total_tasks": 0
         }
 
-
     return jsonify(output)
 
 @app.route("/tasks/<int:id>", methods=["GET"])
@@ -34,6 +33,38 @@ def get_task_by_id(id):
         return jsonify(task.to_dict())
     else:
         return jsonify({"message": "Tarefa não encontrada"}), 400
+
+@app.route("/tasks/<int:id>", methods=["PUT"])
+def update_tak(id):
+    task = None
+    for t in tasks:
+        if t.id == id:
+            task = t
+            break
+    print(task)
+    if task == None:
+        return jsonify({"message": "Não foi possível encontrar a atividade"}), 400
+    data = request.get_json()
+    task.title = data["title"]
+    task.description = data["description"]
+    task.completed = data["completed"]
+    print(tasks)
+    return jsonify({ "message": "Tarefa atualizada com sucesso!" })
+
+@app.route("/tasks/<int:id>", methods=["DELETE"])
+def delete_task(id):
+    task = None
+    for t in tasks:
+        if t.id == id:
+            task = t
+            break
+    
+    if not task:
+        return jsonify({"message": "Não foi possível encontrar a atividade"}), 400
+    
+    tasks.remove(task)
+    return jsonify({"message": "Tarefa removidade!"})
+
 
 
 if __name__ == "__main__":
