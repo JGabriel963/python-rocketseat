@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from models.user import User
 from database import db
+import bcrypt
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 
 app = Flask(__name__)
@@ -28,7 +29,9 @@ def login():
         # Login
         user = User.query.filter_by(username=username).first()
 
-        if user and user.password == password:
+        password_match = bcrypt.checkpw(str.encode(password), str.encode(user.password))
+
+        if user and password_match:
             login_user(user)
             print(current_user.is_authenticated)
             return jsonify({"message": "Autenticação bem-sucedida"})
@@ -50,7 +53,8 @@ def create_user():
     password = data.get("password")
 
     if username and password:
-        user = User(username=username, password=password)
+        hashed_password = bcrypt.hashpw(str.encode(password), bcrypt.gensalt())
+        user = User(username=username, password=hashed_password, role="user")
         db.session.add(user)
         db.session.commit()
         return jsonify({"message": "Usuário criado com sucesso"}), 201
@@ -76,6 +80,9 @@ def update_user(id_user):
     data = request.json
     user = User.query.get(id_user)
 
+    if id_user == current_user.id and current_user.role == 'user':
+        return jsonify({"message": "Atualização não permitida"}), 403
+
     if user and data.get("password"):
         user.username = data.get("password")
         db.session.commit()
@@ -88,6 +95,10 @@ def update_user(id_user):
 def delete_user(id_user):
     user = User.query.get(id_user)
 
+    if current_user.role != 'admin':
+        return jsonify({"message": "Acesso negado"}), 403
+
+
     if id_user == current_user.id:
         return jsonify({"message": "Deleção não permitida"}), 403
 
@@ -97,8 +108,6 @@ def delete_user(id_user):
         return jsonify({"message": f'Usuário {id_user} deletado com sucesso!'})
     
     return jsonify({"message": f'Usuário {id_user} deletado com sucesso!'}), 404
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)
