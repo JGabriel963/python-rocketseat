@@ -1,0 +1,9 @@
+@baseUrl  = http://localhost:5000
+
+# @name create_payment_pix
+POST {{baseUrl}}/payments/pix
+Content-Type: application/json
+
+{
+    "value": 14999.0
+}
