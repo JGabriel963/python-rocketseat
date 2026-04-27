@@ -5,5 +5,16 @@ POST {{baseUrl}}/payments/pix
 Content-Type: application/json
 
 {
-    "value": 14999.0
+    "value": 400
+}
+
+###
+
+# @name confirmation_payment_pix
+POST {{baseUrl}}/payments/pix/confirmation
+Content-Type: application/json
+
+{
+    "value": 400,
+    "bank_payment_id": "c45bd5f0-8b85-49de-8226-771dab1e5d0e"
 }
