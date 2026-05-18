@@ -1,0 +1,9 @@
+@baseUrl = http://localhost:3001
+
+###
+POST {{baseUrl}}/calculator/1
+Content-Type: application/json
+
+{
+    "number": 12
+}
