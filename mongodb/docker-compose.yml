@@ -1,0 +1,18 @@
+services:
+  mongodb:
+    image: bitnami/mongodb:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGODB_ROOT_USER: root
+      MONGODB_ROOT_PASSWORD: rootpassword
+      MONGODB_USERNAME: app
+      MONGODB_PASSWORD: apppassword
+      MONGODB_DATABASE: rocket_db
+    volumes:
+      - mongodb_data:/bitnami/mongodb
+
+volumes:
+  mongodb_data:
+    driver: local
