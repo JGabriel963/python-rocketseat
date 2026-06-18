@@ -1,0 +1,21 @@
+from redis import Redis
+
+
+class RedisConnection:
+    def __init__(self) -> None:
+        self.__redis_conn: Redis | None = None
+
+    def connect(self) -> Redis:
+        redis_conn = Redis(host="localhost", port=6379, db=0)
+        self.__redis_conn = redis_conn
+        return redis_conn
+
+    def get_connection(self) -> Redis:
+        if self.__redis_conn is None:
+            raise RuntimeError(
+                "Redis connection not established. Call connect() first."
+            )
+        return self.__redis_conn
+
+
+redis_connection_handler = RedisConnection()
