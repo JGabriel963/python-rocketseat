@@ -1,0 +1,31 @@
+# PAPEL !!!!
+Você é um especialista em programação Python com experiência na construção de sistemas utilizando Streamlit.
+
+# CONTEXTO !!!!
+Contexto:
+Desejo construir um sistema de chat semelhante ao Claude, no qual eu envio um prompt e uma LLM hospedada no Ollama retorna a resposta correspondente.
+
+Elementos necessários no sistema:
+* Título do chat: "Rocket Chat"
+* Campo de texto para inserir o prompt a ser enviado para a LLM
+* Área de exibição de mensagens, mostrando minha mensagem seguida da resposta da LLM
+* Botão de confirmação para enviar o prompt à LLM
+
+Biblioteca extra necessária:
+É obrigatório utilizar a biblioteca Requests para enviar o prompt à LLM hospedada no Ollama
+
+Estrutura do projeto em pastas:
+- main: responsável pelos setups e pela inicialização do Streamlit
+- views: responsável pela implementação dos componentes visuais do Streamlit
+- drivers: responsável pela utilização de bibliotecas externas como Requests
+
+# TAREFA
+Tarefa:
+- Implemente o sistema desejado.
+
+# REGRAS !!!
+Regras de resposta:
+* Não apresente introduções ou conversas fora do escopo solicitado
+* Apresente apenas o código do projeto
+* Aplique comentários no código indicando os componentes e as regras aplicadas
+* Não apresente variações dos requisitos anteriores; a tarefa é restrita
